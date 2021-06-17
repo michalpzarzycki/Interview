@@ -16,9 +16,9 @@ const fetchWeather = (city: string) => {
 }
 const weatherDataConvert = (data: any) => {
   data.main.temp = Math.round(data.main.temp - 273) + " °C";
-  data.main.feels_like = Math.round(data.main.feels_like - 273) + " °C";
-  data.main.temp_min = Math.round(data.main.temp_min - 273) + " °C";
-  data.main.temp_max = Math.round(data.main.temp_max - 273) + " °C";
+  data.main.feels_like =  Math.round(data.main.feels_like - 273) + " °C";
+  data.main.temp_min =  Math.round(data.main.temp_min - 273) + " °C";
+  data.main.temp_max =  Math.round(data.main.temp_max - 273) + " °C";
   data.main.pressure += " hPa";
   data.main.humidity += " %"
   return { name: data.name, ...data.main, ...data.weather[0] }
@@ -39,27 +39,29 @@ function App() {
     });
 
   }, [])
-
+useEffect(() => {  
+      
+}, [weathers])
   return (
-    <div>
+    <div className="mainDiv">
       <table>
-        <tr>
-          {Object.keys(weathers[0]).map((val, idx) => (
+         <tr>
+        {weathers.length && Object.keys(weathers[0]).map((val, idx) => (
             <th>{val}</th>
-          ))}
-        </tr>
-
-
-        {weathers.map((weather: any, Idx: any) => (
-          <tr>
-            {Object.keys(weathers[0]).map((val: any) => (
-              <td>{weather[val]}</td>
-            ))}
-          </tr>
         ))}
+        </tr> 
+       
+  
+      {weathers.map((weather: any, Idx: any) => (
+      <tr>
+        {Object.keys(weathers[0]).map((val: any) => (
+          <td>{weather[val]}</td>
+        ))}
+    </tr>
+      ))}
       </table>
-    </div>
-
+</div>
+    
   );
 }
 
